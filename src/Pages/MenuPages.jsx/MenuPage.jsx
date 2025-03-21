@@ -14,6 +14,9 @@ import SoupsImg from "../../assets/menu/soup-bg.jpg"
 const MenuPage = () => {
 
     const [menu] = useMenu()
+
+    console.log("bttt", menu)
+
     const offered = menu.filter(p => p.category === "offered")
     const dessert = menu.filter(p => p.category === "dessert")
     const pizza = menu.filter(p => p.category === "pizza")
@@ -29,27 +32,27 @@ const MenuPage = () => {
 
             {/* {offered} */}
             <SectionTitle subheading={"---Don't miss---"} heading={"TODAY'S OFFER"}></SectionTitle>
-            <Manu categoryData={offered}></Manu>
+            <Manu title={""} categoryData={offered}></Manu>
 
 
 
             {/* {dessert} */}
             <Cover details={"lorem is the best title for ever lorem is the best title for ever"} title={"Desserts"} coverImg={dessertmg}></Cover>
-            <Manu categoryData={dessert}></Manu>
+            <Manu title={"dessert"} categoryData={dessert}></Manu>
 
             {/* {Pixxa} */}
             <Cover details={"lorem is the best title for ever lorem is the best title for ever"} title={"Pizza"} coverImg={pizzartmg}></Cover>
-            <Manu categoryData={pizza}></Manu>
+            <Manu title={"pizza"} categoryData={pizza}></Manu>
 
 
             {/* {Salaad} */}
             <Cover details={"lorem is the best title for ever lorem is the best title for ever"} title={"Salaad"} coverImg={saladtmg}></Cover>
-            <Manu categoryData={salad}></Manu>
+            <Manu title={"salad"} categoryData={salad}></Manu>
 
 
             {/* {Soups} */}
             <Cover details={"lorem is the best title for ever lorem is the best title for ever"} title={"Salaad"} coverImg={SoupsImg}></Cover>
-            <Manu categoryData={soup}></Manu>
+            <Manu title={"soup"} categoryData={soup}></Manu>
 
         </div>
     );

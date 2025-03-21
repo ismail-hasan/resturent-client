@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import useMenu from '../../Shared/useMenu';
+import { Link, useParams } from 'react-router-dom';
 
 
 
-const Manu = ({ categoryData }) => {
+const Manu = ({ categoryData, title }) => {
 
-    // const [menu] = useMenu()
-    // const fetchData = menu.filter(p => p.category === categoryData)
 
+    // console.log("hii", categoryData)
 
     return (
         <div>
@@ -30,15 +30,21 @@ const Manu = ({ categoryData }) => {
                                 <h1 className='text-xl text-yellow-500'>${singleMenu.price}</h1>
                             </div>
 
-
                         </div>
+
 
 
 
                     ))
                 }
+            </div>
 
-            </div></div>
+            <div className='max-w-fit mx-auto my-10'>
+                <Link to={`/oder/${title}`}>
+                    <button className="btn btn-active btn-primary">Oder Now</button>
+                </Link>
+            </div>
+        </div >
     );
 };
 

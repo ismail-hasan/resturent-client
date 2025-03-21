@@ -5,6 +5,7 @@ import Catagory from './Catagory';
 import Manu from './Manu';
 import CheckOut from './CheckOut';
 import useMenu from '../../Shared/useMenu';
+import TabItm from '../Order/TabItem';
 
 
 const HomeLayout = () => {
@@ -23,6 +24,7 @@ const HomeLayout = () => {
 
             <Manu categoryData={pupularMenu}></Manu>
             <CheckOut></CheckOut>
+            <TabItm item={pupularMenu}></TabItm>
         </div>
     );
 };
