@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../Providers/AuthProvider';
+import { useLocation, useNavigate } from 'react-router-dom';
 const Login = () => {
     const inputCaptcha = useRef()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/';
     const { loginUser } = useContext(AuthContext)
 
     useEffect(() => {
@@ -28,6 +32,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user
                 console.log(user)
+                navigate(from)
             })
             .catch(err => console.log(err))
 

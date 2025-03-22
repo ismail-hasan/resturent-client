@@ -1,6 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useForm } from "react-hook-form"
+import { AuthContext } from '../../Providers/AuthProvider';
+import { useNavigate } from 'react-router-dom';
+
 
 const SignUp = () => {
+    const { createUser } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const {
+        register, handleSubmit, formState: { errors }, } = useForm()
+
+    const onSubmit = (data) => {
+        console.log(data)
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user
+
+
+
+                
+                navigate("/")
+                console.log(user)
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -11,21 +35,41 @@ const SignUp = () => {
                     </p>
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <form className="card-body">
+                    <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                         <fieldset className="fieldset">
                             <div>
                                 <label className="fieldset-label">Name</label>
-                                <input type="name" name='name' className="input" placeholder="name here" />
+                                <input {...register("name", { required: true })} type="name" name='name' className="input" placeholder="name here" />
                             </div>
+
+                            {errors.name && <span>This field is required</span>}
+
                             <div>
                                 <label className="fieldset-label">Email</label>
-                                <input type="email" name='email' className="input" placeholder="Email" />
+                                <input {...register("email", { required: true })} type="email" name='email' className="input" placeholder="Email" />
                             </div>
+                            {errors.email && <span>This field is required</span>}
+
 
                             <div>
                                 <label className="fieldset-label">Password</label>
-                                <input name='password' type="password" className="input" placeholder="Password" />
+                                <input
+                                    {...register("password",
+                                        {
+                                            minLength: { value: 6, message: "min six carachter<" },
+                                            maxLength: { value: 8, message: "max 10 carachter" },
+                                            required: { value: true, message: "must submit" },
+                                            // pattern: {
+                                            //     value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,10}$/,
+                                            //     message: "Password must contain uppercase, lowercase, number, and special character"
+                                            // }
+
+                                        })} name='password'
+                                    type="password"
+                                    className="input"
+                                    placeholder="Password" />
                             </div>
+                            {errors.password && <span className='text-red-600'>{errors.password.message}</span>}
 
                             <button className="btn btn-neutral mt-4">Sign Up</button>
                         </fieldset>
