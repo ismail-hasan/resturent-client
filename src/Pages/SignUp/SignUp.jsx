@@ -5,24 +5,36 @@ import { useNavigate } from 'react-router-dom';
 
 
 const SignUp = () => {
-    const { createUser } = useContext(AuthContext)
+    const { createUser, updateUser } = useContext(AuthContext)
     const navigate = useNavigate()
     const {
         register, handleSubmit, formState: { errors }, } = useForm()
 
     const onSubmit = (data) => {
         console.log(data)
+
+
         createUser(data.email, data.password)
             .then(result => {
-                const user = result.user
+                const user = result.user;
 
+                // If there is a name, update the user's profile
+                if (data?.name) {
+                    updateUser(data.name)
+                        .then(() => {
+                            console.log("Profile updated successfully!");
+                            navigate("/");  // Navigate to home or dashboard after successful signup
+                        })
+                        .catch((error) => {
+                            console.log("Error occurred while updating user profile:", error);
+                        });
+                }
 
-
-                
-                navigate("/")
-                console.log(user)
+                console.log("User:", user);
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log("Error during sign up:", err);
+            });
     }
 
     return (
