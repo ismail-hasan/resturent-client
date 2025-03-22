@@ -2,7 +2,6 @@ import React from 'react';
 
 const SingleCard = ({ singleCard }) => {
 
-    console.log(singleCard)
     const { image, name, price, recipe } = singleCard
     return (
         <div className="card bg-base-100 shadow-sm">

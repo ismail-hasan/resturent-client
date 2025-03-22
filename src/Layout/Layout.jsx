@@ -6,14 +6,15 @@ import Footer from '../Shared/Footer';
 const Layout = () => {
 
     const loginLocation = useLocation()
-    console.log(loginLocation)
+
+    const noLoginRegister = loginLocation.pathname === "/login" || loginLocation.pathname === "/signup"
 
     return (
         <div>
 
-            {loginLocation.pathname === "/login" || <Navbar></Navbar>}
+            {noLoginRegister || <Navbar></Navbar>}
             <Outlet></Outlet>
-            {loginLocation.pathname === "/login" || <Footer></Footer>}
+            {noLoginRegister || <Footer></Footer>}
         </div>
     );
 };
