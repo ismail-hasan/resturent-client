@@ -67,7 +67,7 @@ const Login = () => {
 
                             <div>
                                 <LoadCanvasTemplate />
-                                <input required ref={inputCaptcha} name='captcha' type="text" className="input" placeholder="Type Captcha" />
+                                <input  ref={inputCaptcha} name='captcha' type="text" className="input" placeholder="Type Captcha" />
                             </div>
 
                             <button className="btn btn-neutral mt-4">Login</button>
