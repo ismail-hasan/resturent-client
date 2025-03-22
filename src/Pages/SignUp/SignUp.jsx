@@ -15,16 +15,16 @@ const SignUp = () => {
                         <fieldset className="fieldset">
                             <div>
                                 <label className="fieldset-label">Name</label>
-                                <input  type="name" name='name' className="input" placeholder="name here" />
+                                <input type="name" name='name' className="input" placeholder="name here" />
                             </div>
                             <div>
                                 <label className="fieldset-label">Email</label>
-                                <input  type="email" name='email' className="input" placeholder="Email" />
+                                <input type="email" name='email' className="input" placeholder="Email" />
                             </div>
 
                             <div>
                                 <label className="fieldset-label">Password</label>
-                                <input  name='password' type="password" className="input" placeholder="Password" />
+                                <input name='password' type="password" className="input" placeholder="Password" />
                             </div>
 
                             <button className="btn btn-neutral mt-4">Sign Up</button>

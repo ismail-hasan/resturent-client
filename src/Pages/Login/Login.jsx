@@ -1,12 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../../Providers/AuthProvider';
 const Login = () => {
-
     const inputCaptcha = useRef()
-
+    const { loginUser } = useContext(AuthContext)
 
     useEffect(() => {
-
         loadCaptchaEnginge(6)
     }, [])
 
@@ -25,7 +24,15 @@ const Login = () => {
             console.log(logInInfo)
         }
 
+        loginUser(email, password)
+            .then(result => {
+                const user = result.user
+                console.log(user)
+            })
+            .catch(err => console.log(err))
+
     }
+
 
 
 
@@ -65,6 +72,7 @@ const Login = () => {
             </div>
         </div>
     );
-};
+}
+
 
 export default Login;
