@@ -2,17 +2,21 @@ import React, { useContext } from 'react';
 import { useForm } from "react-hook-form"
 import { AuthContext } from '../../Providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
+import useAxoisPublic from '../../Hook/useAxoisPublic';
 
 
 const SignUp = () => {
     const { createUser, updateUser } = useContext(AuthContext)
     const navigate = useNavigate()
-    const {
-        register, handleSubmit, formState: { errors }, } = useForm()
+    const { register, handleSubmit, formState: { errors }, } = useForm()
+    const axiosPublic = useAxoisPublic()
+
+
+
+
 
     const onSubmit = (data) => {
         console.log(data)
-
 
         createUser(data.email, data.password)
             .then(result => {
@@ -22,15 +26,27 @@ const SignUp = () => {
                 if (data?.name) {
                     updateUser(data.name)
                         .then(() => {
-                            console.log("Profile updated successfully!");
-                            navigate("/");  // Navigate to home or dashboard after successful signup
+                            const userInfo = {
+                                name: data.name,
+                                email: data.email
+                            }
+                            axiosPublic.post("users", userInfo)
+                                .then(res => {
+                                    if (res.data.insertedId) {
+                                        console.log(res.data)
+                                        console.log("Profile updated successfully!");
+                                        navigate("/");
+                                    }
+
+                                })
+
+
                         })
                         .catch((error) => {
                             console.log("Error occurred while updating user profile:", error);
                         });
                 }
 
-                console.log("User:", user);
             })
             .catch(err => {
                 console.log("Error during sign up:", err);
