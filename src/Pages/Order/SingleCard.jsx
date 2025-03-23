@@ -2,11 +2,16 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../Providers/AuthProvider';
 import Swal from 'sweetalert2'
 import { useLocation, useNavigate } from 'react-router-dom';
+import useAxois from '../../Hook/useAxois';
+import useCart from '../../Hook/useCart';
+
 
 const SingleCard = ({ singleCard }) => {
     const { user } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
+    const axiosSequire = useAxois()
+    const [, refetch] = useCart()
 
     const { image, name, price, recipe, _id } = singleCard
 
@@ -18,11 +23,25 @@ const SingleCard = ({ singleCard }) => {
                 cartId: _id,
                 email: user.email,
                 name,
-                price
+                price,
+                image
             }
 
             // use fetch method 
-            
+            axiosSequire.post('carts', cartInfo)
+                .then(res => {
+                    if (res.data.insertedId) {
+                        Swal.fire({
+                            title: "Product added!",
+                            icon: "success",
+                            draggable: true
+                        });
+                        refetch()
+                    }
+                    console.log(res.data)
+                })
+
+
             console.log("cartInfo", cartInfo)
         }
         else {

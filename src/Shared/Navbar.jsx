@@ -2,9 +2,12 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Providers/AuthProvider';
 import { FiShoppingCart } from "react-icons/fi";
+import useCart from '../Hook/useCart';
 
 const Navbar = () => {
     const { user, logoutUser } = useContext(AuthContext)
+    const [cart] = useCart()
+    console.log("cart", cart)
 
     const handleLogout = () => {
         console.log("dsf")
@@ -23,11 +26,13 @@ const Navbar = () => {
             <li><Link to={"/login"}>Login</Link></li>
             <li><Link to={"/signup"}>Sign Up</Link></li>
             <li><Link to={"/secret"}>Secret</Link></li>
+            <li><Link>Dashbord</Link></li>
             <li>
-                <button className="btn">
+
+                <Link to={"/dashbord/cart"} className="btn">
                     <FiShoppingCart />
-                    <div className="badge badge-sm badge-secondary">0</div>
-                </button>
+                    <div className="badge badge-sm badge-secondary">{cart?.length}</div>
+                </Link>
             </li>
             <li><Link>{user?.email}</Link></li>
         </>
