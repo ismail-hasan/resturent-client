@@ -1,11 +1,11 @@
 import React, { createContext, useEffect, useState } from 'react';
 import auth from '../FireBase/FireBase.init';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
-
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 
 
 export const AuthContext = createContext(null)
 const AuthProvider = ({ children }) => {
+    const provider = new GoogleAuthProvider()
     const [user, setUser] = useState({ name: "ismail" })
     const [loading, setLoading] = useState(true)
 
@@ -30,14 +30,22 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     const logoutUser = () => {
+        setLoading(true)
         return signOut(auth)
     }
 
 
     const updateUser = (name) => {
+        setLoading(true)
         return updateProfile(auth.currentUser, {
             displayName: name,
         })
+    }
+
+
+    const googleLog = () => {
+        setLoading(true)
+        return signInWithPopup(auth, provider)
     }
 
 
@@ -48,8 +56,8 @@ const AuthProvider = ({ children }) => {
         createUser,
         loginUser,
         logoutUser,
-        updateUser
-
+        updateUser,
+        googleLog
 
     }
 

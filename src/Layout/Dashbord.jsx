@@ -4,6 +4,8 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 const Dashbord = () => {
 
+    const isAdmin = true
+
     return (
         <div className="flex">
             {/* Sidebar */}
@@ -11,11 +13,30 @@ const Dashbord = () => {
                 <h1 className="text-2xl font-bold mb-8">BISTRO BOSS RESTAURANT</h1>
                 <nav>
                     <ul className="space-y-4">
-                        <li>User Home</li>
-                        <li>Reservation</li>
-                        <li>Payment History</li>
-                        <li><NavLink to={"/dashbord/cart"}>My Cart</NavLink></li>
-                        <li>My Booking</li>
+                        {
+                            isAdmin ?
+                                <>
+                                    <li>Admin Home</li>
+                                    <li>Add Items</li>
+                                    <li>Mange Items</li>
+                                    <li>Mange Booking</li>
+                                    <li><NavLink to={'/dashbord/users'}>All Users</NavLink></li>
+                                </>
+                                :
+                                <>
+                                    <li><NavLink to={"/dashbord/cart"}>User Home</NavLink></li>
+                                    <li><NavLink to={"/dashbord/cart"}>Reservation</NavLink></li>
+                                    <li><NavLink to={"/dashbord/cart"}>Payment History</NavLink></li>
+                                    <li><NavLink to={"/dashbord/cart"}>My Cart</NavLink></li>
+                                    <li><NavLink to={"/dashbord/cart"}>Add Revire</NavLink></li>
+                                    <li><NavLink to={"/dashbord/cart"}>My Booking</NavLink></li>
+
+                                </>
+                        }
+
+
+                        <div className="divider divider-success"></div>
+
                         <li><NavLink to={"/"}>Home</NavLink></li>
                         <li>Menu</li>
                         <li>Shop</li>
