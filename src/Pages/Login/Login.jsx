@@ -35,14 +35,6 @@ const Login = () => {
     };
 
 
-    googleLog()
-        .then(result => {
-            console.log(result.user);
-            navigate(from);
-        })
-        .catch(err => console.log(err));
-
-
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">

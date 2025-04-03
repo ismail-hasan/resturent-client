@@ -6,7 +6,7 @@ import useAxoisPublic from '../../Hook/useAxoisPublic';
 import GoolgeLogs from '../../Componetns/GoolgeLogs';
 
 const SignUp = () => {
-    const { createUser, updateUser, googleLog } = useContext(AuthContext);
+    const { createUser, updateUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const axiosPublic = useAxoisPublic();

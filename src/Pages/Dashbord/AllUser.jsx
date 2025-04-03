@@ -3,6 +3,7 @@ import React from 'react';
 import useAxois from '../../Hook/useAxois';
 import { MdDelete } from 'react-icons/md';
 import Swal from 'sweetalert2';
+import { FaUserAlt } from "react-icons/fa";
 
 const AllUser = () => {
 
@@ -19,7 +20,6 @@ const AllUser = () => {
 
     const delteUser = (id) => {
         console.log(id)
-
 
         Swal.fire({
             title: "Are you sure?",
@@ -45,13 +45,31 @@ const AllUser = () => {
                     })
             }
         });
-
-
-
-
     }
 
+    const handleAdmin = (user) => {
+        console.log("hii", user._id)
 
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: `admin is ${user.email}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSequire.patch(`users/admin/${user._id}`)
+                    .then(res => {
+                        console.log(res.data)
+                        refetch()
+                    })
+            }
+        });
+
+    }
 
 
 
@@ -74,25 +92,35 @@ const AllUser = () => {
                     </thead>
                     <tbody>
                         {users.map(user => (
-                            <tr key={user.id} className="border-b">
+                            <tr key={user._id} className="border-b">
                                 <td className="py-2 px-4">{user.name}</td>
                                 <td className="py-2 px-4">{user.email}</td>
                                 <td className="py-2 px-4">
-                                    <div className="bg-amber-600 text-white p-2 rounded-full inline-block">
-
-                                    </div>
+                                    {user?.role === 'admin' ? 'admin' : <button onClick={() => handleAdmin(user)} className="bg-amber-600 text-white p-2 rounded-full inline-block">
+                                        <FaUserAlt />
+                                    </button>
+                                    }
                                 </td>
                                 <td className="py-2 px-4">
-                                    <button onClick={() => delteUser(user._id)} className="bg-red-600 text-white p-2 rounded-full">
-                                        <MdDelete />
-                                    </button>
+
+
+                                    {
+                                        user?.role !== 'admin' && <button
+                                            onClick={() => delteUser(user._id)}
+                                            className="bg-red-600 text-white p-2 rounded-full"
+                                        >
+                                            <MdDelete />
+                                        </button>
+                                    }
+
+
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 
