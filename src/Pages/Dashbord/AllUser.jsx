@@ -48,9 +48,6 @@ const AllUser = () => {
     }
 
     const handleAdmin = (user) => {
-        console.log("hii", user._id)
-
-
         Swal.fire({
             title: "Are you sure?",
             text: `admin is ${user.email}`,
@@ -66,6 +63,7 @@ const AllUser = () => {
                         console.log(res.data)
                         refetch()
                     })
+
             }
         });
 

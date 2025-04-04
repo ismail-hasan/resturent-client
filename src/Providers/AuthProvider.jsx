@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import auth from '../FireBase/FireBase.init';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import useAxoisPublic from '../Hook/useAxoisPublic';
 
 
 export const AuthContext = createContext(null)
@@ -8,6 +9,7 @@ const AuthProvider = ({ children }) => {
     const provider = new GoogleAuthProvider()
     const [user, setUser] = useState({ name: "ismail" })
     const [loading, setLoading] = useState(true)
+    const axiosPublic = useAxoisPublic()
 
 
     const createUser = (email, password) => {
@@ -23,7 +25,23 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currenUser => {
             setUser(currenUser)
-            console.log("curenUser", currenUser)
+            const userInfo = { email: currenUser?.email }
+
+            if (currenUser) {
+                axiosPublic.post('jwt', userInfo)
+                    .then(res => {
+                        console.log("curenUser", currenUser)
+                        if (res.data.token) {
+                            localStorage.setItem("authToken", res.data.token);
+                        }
+                    })
+            }
+
+
+            else {
+                localStorage.removeItem("authToken");
+            }
+
             setLoading(false)
         })
         return () => unsubscribe()
@@ -47,7 +65,6 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         return signInWithPopup(auth, provider)
     }
-
 
 
     const authInfo = {

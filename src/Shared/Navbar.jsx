@@ -7,10 +7,8 @@ import useCart from '../Hook/useCart';
 const Navbar = () => {
     const { user, logoutUser } = useContext(AuthContext)
     const [cart] = useCart()
-    console.log("cart", cart)
 
     const handleLogout = () => {
-        console.log("dsf")
         logoutUser()
             .then(() => { })
             .catch(err => console.log(err))
